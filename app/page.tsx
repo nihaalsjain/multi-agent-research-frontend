@@ -21,6 +21,8 @@ const TABS = [
   { key: "analysis", label: "Analysis" },
 ] as const;
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+
 export default function Home() {
   const [topic, setTopic] = useState("");
   const [result, setResult] = useState<ResearchResult | null>(null);
@@ -37,7 +39,7 @@ export default function Home() {
     setResult(null);
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/research", {
+      const res = await fetch(`${API_URL}/research`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ topic: topic.trim() }),
